@@ -72,7 +72,7 @@ export default class Board extends React.Component{
                     Change Layout:
                     <Input type='number' value={this.state.N}  onChange={this.handleChange} ></Input>
                 </InputGroup>
-                <Container>
+                <Container className="board">
                     {items}
                 </Container>
             </Container>
