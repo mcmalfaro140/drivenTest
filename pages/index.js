@@ -1,11 +1,11 @@
-import Head from 'next/head'
-// import styles from '../styles/Home.module.css'
-// import '../styles/App.scss'
+import { Container, Row, Col } from 'reactstrap';
+import Board from '../components/Board'
 
 export default function Home() {
   return (
-    <div >
-      <h1>Board</h1>
-    </div>
+    <Container>
+      <h1 className="header">Checkers Board</h1>
+      <Board/>
+    </Container>
   )
 }

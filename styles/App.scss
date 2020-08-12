@@ -1,2 +1,8 @@
 //import Core Files
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+//import pages style
+@import './pages_style/index';
+
+//import components style
+@import './comp_style/board'
