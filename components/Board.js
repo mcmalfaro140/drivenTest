@@ -6,55 +6,70 @@ export default class Board extends React.Component{
         this.state = {
             N : 6
         }
-        this.col = this.col.bind(this);
-        this.row_even = this.row_even.bind(this);
-        this.row_odd = this.row_odd.bind(this);
+        this.row = this.row.bind(this);
+        this.col_even = this.col_even.bind(this);
+        this.col_odd = this.col_odd.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
-    row_even(){
-        let my_row = [];
-        for (let index = 0; index < this.state.N; index++) {
-            if(index % 2 === 0){
-                my_row.push(<Col className="tiles black"></Col>)
-            }else{
-                my_row.push(<Col className="tiles"></Col>)
-            }
-           
-        }
-        return my_row;
+    componentDidMount(){
+        let first_r = document.getElementById(1);
+        first_r.childNodes.forEach((e) => {
+            console.log(e)
+        })
+        // console.log(first_r.childNodes[1])
     }
 
-    row_odd(){
-        let my_row = [];
-        for (let index = 0; index < this.state.N; index++) {
-            if(index % 2 === 1){
-                my_row.push(<Col className="tiles black"></Col>)
-            }else{
-                my_row.push(<Col className="tiles"></Col>)
-            }
-           
+    col_even = (e) => {
+        let dot = false
+        if(e < 2){
+            dot = true
         }
-        return my_row;
-    }
-
-    col(){
         let my_col = [];
-        const rows_even = this.row_even().map((e,i) => {
-            return(e)
-        })
-        const rows_odd = this.row_odd().map((e,i) => {
-            return(e)
-        })
         for (let index = 0; index < this.state.N; index++) {
             if(index % 2 === 0){
-                my_col.push(<Row>{rows_even}</Row>)
-            }
-            else{
-                my_col.push(<Row>{rows_odd}</Row>)
+                my_col.push(<Col className="tiles black"><div className={dot ? "red_piece" : "" }></div></Col>)
+            }else{
+                my_col.push(<Col className="tiles"><div className={dot ? "red_piece" : "" }></div></Col>)
             }
         }
         return my_col;
+    }
+
+    col_odd = (e) => {
+        let dot = false
+        if(e < 2){
+            dot = true
+        }
+        let my_col = [];
+        for (let index = 0; index < this.state.N; index++) {
+            if(index % 2 === 1){
+                my_col.push(<Col className="tiles black"><div className={dot ? "red_piece" : "" }></div></Col>)
+            }else{
+                my_col.push(<Col className="tiles"><div className={dot ? "red_piece" : "" }></div></Col>)
+            }
+           
+        }
+        return my_col;
+    }
+
+    row(){
+        let my_row = [];
+        for (let index = 0; index < this.state.N; index++) {
+            const col_even = this.col_even(index).map((e,i) => {
+                return(e)
+            })
+            const col_odd = this.col_odd(index).map((e,i) => {
+                return(e)
+            })
+            if(index % 2 === 0){
+                my_row.push(<Row key={index} id={index}>{col_even}{index}</Row>)
+            }
+            else{
+                my_row.push(<Row key={index} id={index}>{col_odd}{index}</Row>)
+            }
+        }
+        return my_row;
     }
 
     handleChange = (e) => {
@@ -63,7 +78,7 @@ export default class Board extends React.Component{
 
 
     render(){
-        const items = this.col().map((e,i) => {
+        const items = this.row().map((e,i) => {
             return(e)
         })
         return(
