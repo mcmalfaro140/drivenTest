@@ -1,14 +1,15 @@
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Input, InputGroup } from 'reactstrap';
 
 export default class Board extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            N : 4
+            N : 6
         }
         this.col = this.col.bind(this);
         this.row_even = this.row_even.bind(this);
         this.row_odd = this.row_odd.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     row_even(){
@@ -56,6 +57,9 @@ export default class Board extends React.Component{
         return my_col;
     }
 
+    handleChange = (e) => {
+        this.setState({N:e.target.value})
+    }
 
 
     render(){
@@ -63,8 +67,14 @@ export default class Board extends React.Component{
             return(e)
         })
         return(
-            <Container className="board">
-                {items}
+            <Container>
+                <InputGroup className="input-field" >
+                    Change Layout:
+                    <Input type='number' value={this.state.N}  onChange={this.handleChange} ></Input>
+                </InputGroup>
+                <Container>
+                    {items}
+                </Container>
             </Container>
         )
     }
