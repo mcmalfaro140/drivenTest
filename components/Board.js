@@ -11,26 +11,21 @@ export default class Board extends React.Component{
         this.col_odd = this.col_odd.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
-
-    componentDidMount(){
-        let first_r = document.getElementById(1);
-        first_r.childNodes.forEach((e) => {
-            console.log(e)
-        })
-        // console.log(first_r.childNodes[1])
-    }
-
     col_even = (e) => {
         let dot = false
+        let myclass = "red_piece"
         if(e < 2){
+            dot = true
+        }else if(this.state.N-3 < e){
+            myclass = "black_piece"
             dot = true
         }
         let my_col = [];
         for (let index = 0; index < this.state.N; index++) {
             if(index % 2 === 0){
-                my_col.push(<Col className="tiles black"><div className={dot ? "red_piece" : "" }></div></Col>)
+                my_col.push(<Col className="tiles black"><div className={dot ? myclass : "" }></div></Col>)
             }else{
-                my_col.push(<Col className="tiles"><div className={dot ? "red_piece" : "" }></div></Col>)
+                my_col.push(<Col className="tiles"><div className={dot ? myclass : "" }></div></Col>)
             }
         }
         return my_col;
@@ -38,15 +33,19 @@ export default class Board extends React.Component{
 
     col_odd = (e) => {
         let dot = false
+        let myclass = "red_piece"
         if(e < 2){
+            dot = true
+        }else if(this.state.N-2 < e){
+            myclass = "black_piece"
             dot = true
         }
         let my_col = [];
         for (let index = 0; index < this.state.N; index++) {
             if(index % 2 === 1){
-                my_col.push(<Col className="tiles black"><div className={dot ? "red_piece" : "" }></div></Col>)
+                my_col.push(<Col className="tiles black"><div className={dot ? myclass : "" }></div></Col>)
             }else{
-                my_col.push(<Col className="tiles"><div className={dot ? "red_piece" : "" }></div></Col>)
+                my_col.push(<Col className="tiles"><div className={dot ? myclass : "" }></div></Col>)
             }
            
         }
