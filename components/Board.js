@@ -10,48 +10,29 @@ export default class Board extends React.Component{
         this.col_even = this.col_even.bind(this);
         this.col_odd = this.col_odd.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.changeColor = this.changeColor.bind(this);
     }
     col_even = (e) => {
         let dot = false
+        let my_id = ""
         let myclass = "red_piece"
-
-        let changeColor = (i) => {
-            switch (i) {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                default:
-                    break;
-            }
-        }
 
         if(e < 2){
             dot = true
+            my_id = "red"
         }else if(this.state.N-3 < e){
             myclass = "black_piece"
             dot = true
+            my_id = "black"
         }
-        
+
         let my_col = [];
         for (let index = 0; index < this.state.N; index++) {
             if(index % 2 === 0){
-                my_col.push(<Col className="tiles black">{dot ? (<div className={dot ? myclass : "" }>
-                    <Row>
-                        <Col><Input type="radio" name="color1" onClick={() => changeColor(0)}/></Col>
-                        <Col><Input type="radio" name="color2" onClick={() => changeColor(1)}/></Col>
-                        <Col><Input type="radio" name="color3" onClick={() => changeColor(2)}/></Col>
-                    </Row>
+                my_col.push(<Col className="tiles black">{dot ? (<div id={my_id} className={dot ? myclass : "" }>
                 </div>) : (<></>)}</Col>)
             }else{
-                my_col.push(<Col className="tiles">{dot ? (<div className={dot ? myclass : "" }>
-                    <Row>
-                        <Col><Input type="radio" name="radio1"/></Col>
-                        <Col><Input type="radio" name="radio2"/></Col>
-                        <Col><Input type="radio" name="radio3"/></Col>
-                    </Row>
+                my_col.push(<Col className="tiles">{dot ? (<div id={my_id} className={dot ? myclass : "" }>
                 </div>) : (<></>)}</Col>)
             }
         }
@@ -61,29 +42,22 @@ export default class Board extends React.Component{
     col_odd = (e) => {
         let dot = false
         let myclass = "red_piece"
+        let my_id = ""
         if(e < 2){
             dot = true
+            my_id = "red"
         }else if(this.state.N-2 < e){
             myclass = "black_piece"
             dot = true
+            my_id = "black"
         }
         let my_col = [];
         for (let index = 0; index < this.state.N; index++) {
             if(index % 2 === 1){
-                my_col.push(<Col className="tiles black">{dot ? (<div className={dot ? myclass : "" }>
-                        <Row>
-                            <Col><Input type="radio" name="radio1"/></Col>
-                            <Col><Input type="radio" name="radio1"/></Col>
-                            <Col><Input type="radio" name="radio1"/></Col>
-                        </Row>
+                my_col.push(<Col className="tiles black">{dot ? (<div id={my_id} className={dot ? myclass : "" }>
                 </div>) : (<></>)}</Col>)
             }else{
-                my_col.push(<Col className="tiles">{dot ? (<div className={dot ? myclass : "" }>
-                    <Row>
-                        <Col><Input type="radio" name="radio1"/></Col>
-                        <Col><Input type="radio" name="radio1"/></Col>
-                        <Col><Input type="radio" name="radio1"/></Col>
-                    </Row>
+                my_col.push(<Col className="tiles">{dot ? (<div id={my_id} className={dot ? myclass : "" }>
                 </div>) : (<></>)}</Col>)
             }
            
@@ -101,10 +75,10 @@ export default class Board extends React.Component{
                 return(e)
             })
             if(index % 2 === 0){
-                my_row.push(<Row key={index} id={index}>{col_even}{index}</Row>)
+                my_row.push(<Row key={index} id={index}>{col_even}</Row>)
             }
             else{
-                my_row.push(<Row key={index} id={index}>{col_odd}{index}</Row>)
+                my_row.push(<Row key={index} id={index}>{col_odd}</Row>)
             }
         }
         return my_row;
@@ -112,6 +86,24 @@ export default class Board extends React.Component{
 
     handleChange = (e) => {
         this.setState({N:e.target.value})
+    }
+
+    changeColor = (i, my_id) => {
+        let my_div = document.getElementById(my_id)
+        my_div.classList.remove(...my_div.classList)
+            switch (i) {
+                case 0:
+                    my_div.classList.add("red_piece")
+                    break;
+                case 1:
+                    my_div.classList.add("black_piece")
+                    break;
+                case 2:
+                    my_div.classList.add("blue_piece")
+                    break;
+                default:
+                    break;
+            }
     }
 
 
@@ -127,6 +119,21 @@ export default class Board extends React.Component{
                 </InputGroup>
                 <Container className="board">
                     {items}
+                    <Container>
+                        Change Color:
+                        <Row>
+                            <Col>Top</Col>
+                            <Col><Input type="radio" name="color1" onClick={() => this.changeColor(0, "red")}/>Red</Col>
+                            <Col><Input type="radio" name="color2" onClick={() => this.changeColor(1, "red")}/>Black</Col>
+                            <Col><Input type="radio" name="color3" onClick={() => this.changeColor(2, "red")}/> Blue</Col>
+                        </Row>
+                        <Row>
+                            <Col>Bottom</Col>
+                            <Col><Input type="radio" name="color1" onClick={() => this.changeColor(0, "black")}/>Red</Col>
+                            <Col><Input type="radio" name="color2" onClick={() => this.changeColor(1, "black")}/>Black</Col>
+                            <Col><Input type="radio" name="color3" onClick={() => this.changeColor(2, "black")}/>Blue</Col>
+                        </Row>
+                    </Container>
                 </Container>
             </Container>
         )
