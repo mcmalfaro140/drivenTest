@@ -106,7 +106,6 @@ export default class Board extends React.Component{
             }
     }
 
-
     render(){
         const items = this.row().map((e,i) => {
             return(e)
