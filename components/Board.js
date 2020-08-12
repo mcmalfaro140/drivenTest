@@ -11,6 +11,7 @@ export default class Board extends React.Component{
         this.col_odd = this.col_odd.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.changeColor = this.changeColor.bind(this);
+        this.changeShape = this.changeShape.bind(this);
     }
     col_even = (e) => {
         let dot = false
@@ -105,6 +106,20 @@ export default class Board extends React.Component{
                     break;
             }
     }
+    changeShape = (i, my_id) => {
+        let my_div = document.getElementById(my_id)
+        console.log(my_div)
+            switch (i) {
+                case 0:
+                    my_div.style.borderRadius = '60px'
+                    break;
+                case 1:
+                    my_div.style.borderRadius = '0px'
+                    break;
+                default:
+                    break;
+            }
+    }
 
     render(){
         const items = this.row().map((e,i) => {
@@ -131,6 +146,19 @@ export default class Board extends React.Component{
                             <Col><Input type="radio" name="color1" onClick={() => this.changeColor(0, "black")}/>Red</Col>
                             <Col><Input type="radio" name="color2" onClick={() => this.changeColor(1, "black")}/>Black</Col>
                             <Col><Input type="radio" name="color3" onClick={() => this.changeColor(2, "black")}/>Blue</Col>
+                        </Row>
+                    </Container>
+                    <Container>
+                        Change Shape:
+                        <Row>
+                            <Col>Top</Col>
+                            <Col><Input type="radio" name="color1" onClick={() => this.changeShape(0, "red")}/>Circle</Col>
+                            <Col><Input type="radio" name="color2" onClick={() => this.changeShape(1, "red")}/>Square</Col>
+                        </Row>
+                        <Row>
+                            <Col>Bottom</Col>
+                            <Col><Input type="radio" name="color1" onClick={() => this.changeShape(0, "black")}/>Circle</Col>
+                            <Col><Input type="radio" name="color2" onClick={() => this.changeShape(1, "black")}/>Square</Col>
                         </Row>
                     </Container>
                 </Container>
